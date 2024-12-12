@@ -137,6 +137,42 @@ void    reverse_list(t_node **head)
      *head = prev;
 }
 
+int is_loop(t_node *head)
+{
+    t_node *slow = head;
+    t_node *fast = head;
+
+    while(slow != NULL && fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast)
+            return (1);
+    }
+    return (0);
+}
+int count_list(t_node *head)
+{
+    int count;
+    count = 0;
+
+    t_node *current = head;
+
+    while(current != NULL)
+    {
+        count++;
+        current = current->next;
+    }
+    return (count);
+}
+
+int recursive_list_count(t_node *head)
+{
+    if (head == NULL)
+        return (0);
+    return (1 + recursive_list_count(head->next));
+}
+
 int	main(void)
 {
 	t_node *node1 = NULL;
@@ -163,11 +199,27 @@ int	main(void)
 
     //insert_sort(&node1, 8);
     insert_sort(&node1, 1);
-    insert_sort(&node1, 2);
+    insert_sort(&node1, 1);
     insert_sort(&node1, 3);
-    insert_sort(&node1, 4);
-    // insert_sort(&node1, 5);
-    // insert_sort(&node1, 6);
+    insert_sort(&node1, 6);
+    insert_sort(&node1, 7);
+
+    //node1->next->next->next->next->next = node1->next;
+
+    if(is_loop(node1) == 1)
+    {  
+        printf("loop linklist detected\n");
+        return (1);
+    }
+    int i;
+    i = 0;
+    i = count_list(node1);
+    printf("list nood's count: %d\n", i);
+     i = 0;
+    i = recursive_list_count(node1);
+    printf("recursive list nood's count: %d\n", i);
+
+    //insert_sort(&node1, 6);
     // insert_sort(&node1, 7);
     //insert_sort(&node1, 9);
 
